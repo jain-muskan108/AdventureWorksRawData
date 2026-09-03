@@ -1,0 +1,97 @@
+table sales_kpi
+	lineageTag: 0f97bef9-bca3-4632-9555-fa33ad5f253c
+	sourceLineageTag: [dbo].[sales_kpi]
+
+	column TotalSales
+		dataType: double
+		lineageTag: f2640cfa-3e43-445c-b797-8ce2f19f702e
+		sourceLineageTag: TotalSales
+		summarizeBy: sum
+		sourceColumn: TotalSales
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column GrossSales
+		dataType: double
+		lineageTag: 01ffebb5-1edf-4817-b839-bd48d686faaa
+		sourceLineageTag: GrossSales
+		summarizeBy: sum
+		sourceColumn: GrossSales
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TotalDiscount
+		dataType: double
+		lineageTag: 8caeaa5e-f43d-4d89-9bd5-7ea843613aff
+		sourceLineageTag: TotalDiscount
+		summarizeBy: sum
+		sourceColumn: TotalDiscount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column NetSales
+		dataType: double
+		lineageTag: 98d1785e-0619-4d48-a9ba-81cafa650979
+		sourceLineageTag: NetSales
+		summarizeBy: sum
+		sourceColumn: NetSales
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TotalOrders
+		dataType: int64
+		formatString: 0
+		lineageTag: bee5895b-566b-4fa1-bf04-38ff2633e01d
+		sourceLineageTag: TotalOrders
+		summarizeBy: sum
+		sourceColumn: TotalOrders
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalUnitsSold
+		dataType: int64
+		formatString: 0
+		lineageTag: b4ea8603-65d3-45d6-9bc9-989dcc34e12d
+		sourceLineageTag: TotalUnitsSold
+		summarizeBy: sum
+		sourceColumn: TotalUnitsSold
+
+		annotation SummarizationSetBy = Automatic
+
+	column AverageOrderValue
+		dataType: double
+		lineageTag: 614e5226-b414-4b32-b424-c9321595cc84
+		sourceLineageTag: AverageOrderValue
+		summarizeBy: sum
+		sourceColumn: AverageOrderValue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column AverageSellingPrice
+		dataType: double
+		lineageTag: df838bdb-01fd-440d-9d6c-258d0d7b37d1
+		sourceLineageTag: AverageSellingPrice
+		summarizeBy: sum
+		sourceColumn: AverageSellingPrice
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition sales_kpi = entity
+		mode: directLake
+		source
+			entityName: sales_kpi
+			schemaName: dbo
+			expressionSource: 'DirectLake - Lakehouse1'
+

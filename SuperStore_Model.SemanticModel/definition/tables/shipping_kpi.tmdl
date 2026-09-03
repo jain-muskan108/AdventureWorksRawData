@@ -1,0 +1,74 @@
+table shipping_kpi
+	lineageTag: 29d7b362-7753-4168-872f-65df8bf19493
+	sourceLineageTag: [dbo].[shipping_kpi]
+
+	column TotalShippedOrders
+		dataType: int64
+		formatString: 0
+		lineageTag: 6c5127ff-1bf0-4e71-a6df-6914125a771a
+		sourceLineageTag: TotalShippedOrders
+		summarizeBy: sum
+		sourceColumn: TotalShippedOrders
+
+		annotation SummarizationSetBy = Automatic
+
+	column OnTimeOrders
+		dataType: int64
+		formatString: 0
+		lineageTag: 145efe70-aec1-4f39-8f3e-023da889eeaa
+		sourceLineageTag: OnTimeOrders
+		summarizeBy: sum
+		sourceColumn: OnTimeOrders
+
+		annotation SummarizationSetBy = Automatic
+
+	column LateOrders
+		dataType: int64
+		formatString: 0
+		lineageTag: 31550e34-1b4f-48a4-94ee-8a09d81c3111
+		sourceLineageTag: LateOrders
+		summarizeBy: sum
+		sourceColumn: LateOrders
+
+		annotation SummarizationSetBy = Automatic
+
+	column AverageShippingDays
+		dataType: double
+		lineageTag: c9aecd26-3d26-46f0-9080-85e4488c2bce
+		sourceLineageTag: AverageShippingDays
+		summarizeBy: sum
+		sourceColumn: AverageShippingDays
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column AverageDaysLate
+		dataType: double
+		lineageTag: 3a96a404-686b-4fb3-b8b9-ace52d6e0152
+		sourceLineageTag: AverageDaysLate
+		summarizeBy: sum
+		sourceColumn: AverageDaysLate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column AverageFreight
+		dataType: double
+		lineageTag: d6c326ba-7abb-413f-bdee-654bf4114def
+		sourceLineageTag: AverageFreight
+		summarizeBy: sum
+		sourceColumn: AverageFreight
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition shipping_kpi = entity
+		mode: directLake
+		source
+			entityName: shipping_kpi
+			schemaName: dbo
+			expressionSource: 'DirectLake - Lakehouse1'
+

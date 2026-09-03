@@ -1,0 +1,67 @@
+table 'Rolling Calendar'
+	excludeFromModelRefresh
+	lineageTag: a9bd253c-e13d-4a20-9919-1c9fd398598c
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 49c3351b-e3a9-4b93-b8c0-5550f8222e63
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 4b6e3941-cc92-4aae-9e7a-4a88a185f7f7
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Start of Quarter'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: d80c64ea-de56-49bd-ad45-e9d6ead8ec9e
+		summarizeBy: none
+		sourceColumn: Start of Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Start of Month'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: b4024d71-d91f-460f-87d1-5d68a1b7e243
+		summarizeBy: none
+		sourceColumn: Start of Month
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition 'Rolling Calendar-df14fa9e-5d5e-4ea6-91d6-b425afb2b642' = m
+		mode: import
+		source =
+				let
+				    Source = #date(2023,1,1),
+				    Custom1 = List.Dates(
+				    Source,
+				    Number.From(DateTime.LocalNow()) - Number.From(Source),
+				    #duration(1,0,0,0)
+				),
+				    #"Converted to Table" = Table.FromList(Custom1, Splitter.SplitByNothing(), null, null, ExtraValues.Error),
+				    #"Renamed Columns" = Table.RenameColumns(#"Converted to Table",{{"Column1", "Date"}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"Date", type date}}),
+				    #"Inserted Year" = Table.AddColumn(#"Changed Type", "Year", each Date.Year([Date]), Int64.Type),
+				    #"Inserted Start of Quarter" = Table.AddColumn(#"Inserted Year", "Start of Quarter", each Date.StartOfQuarter([Date]), type date),
+				    #"Inserted Start of Month" = Table.AddColumn(#"Inserted Start of Quarter", "Start of Month", each Date.StartOfMonth([Date]), type date)
+				in
+				    #"Inserted Start of Month"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,216 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "ForEach",
+        "typeProperties": {
+          "items": {
+            "value": "@activity('Get Metadata1').output.childItems",
+            "type": "Expression"
+          },
+          "activities": [
+            {
+              "type": "IfCondition",
+              "typeProperties": {
+                "expression": {
+                  "value": "@equals(item().name, 'products.parquet')",
+                  "type": "Expression"
+                },
+                "ifTrueActivities": [
+                  {
+                    "type": "TridentNotebook",
+                    "typeProperties": {
+                      "notebookId": "cd7ea3e4-461e-87b9-4ba9-34bf4da25fa8",
+                      "workspaceId": "00000000-0000-0000-0000-000000000000"
+                    },
+                    "policy": {
+                      "timeout": "0.12:00:00",
+                      "retry": 0,
+                      "retryIntervalInSeconds": 30,
+                      "secureInput": false,
+                      "secureOutput": false
+                    },
+                    "name": "Notebook1",
+                    "dependsOn": []
+                  }
+                ],
+                "ifFalseActivities": [
+                  {
+                    "type": "Copy",
+                    "typeProperties": {
+                      "source": {
+                        "type": "ParquetSource",
+                        "storeSettings": {
+                          "type": "AzureBlobStorageReadSettings",
+                          "recursive": true,
+                          "enablePartitionDiscovery": false
+                        },
+                        "formatSettings": {
+                          "type": "ParquetReadSettings"
+                        },
+                        "datasetSettings": {
+                          "type": "Parquet",
+                          "typeProperties": {
+                            "location": {
+                              "type": "LakehouseLocation",
+                              "folderPath": {
+                                "value": "@concat('Raw\\','DummyJson_',formatDateTime(utcNow(),'yyyyMMdd'))",
+                                "type": "Expression"
+                              },
+                              "fileName": {
+                                "value": "@item().name",
+                                "type": "Expression"
+                              }
+                            },
+                            "compressionCodec": "snappy"
+                          },
+                          "schema": [],
+                          "linkedService": {
+                            "name": "API",
+                            "properties": {
+                              "type": "Lakehouse",
+                              "typeProperties": {
+                                "artifactId": "656aa3f1-e993-9212-4b0f-b435e1c6bf42",
+                                "workspaceId": "00000000-0000-0000-0000-000000000000",
+                                "rootFolder": "Files"
+                              },
+                              "annotations": []
+                            }
+                          },
+                          "annotations": []
+                        }
+                      },
+                      "sink": {
+                        "type": "ParquetSink",
+                        "formatSettings": {
+                          "type": "ParquetWriteSettings",
+                          "enableVertiParquet": true
+                        },
+                        "storeSettings": {
+                          "type": "AzureBlobStorageWriteSettings"
+                        },
+                        "datasetSettings": {
+                          "type": "Parquet",
+                          "typeProperties": {
+                            "location": {
+                              "type": "LakehouseLocation",
+                              "folderPath": {
+                                "value": "@concat('Bronze\\','DummyJson_',formatDateTime(utcNow(),'yyyyMMdd'))\n",
+                                "type": "Expression"
+                              },
+                              "fileName": {
+                                "value": "@concat(replace(item().name,'.parquet','') , formatDateTime(utcNow(),'yyyyMMdd'),'.parquet')\n",
+                                "type": "Expression"
+                              }
+                            },
+                            "compressionCodec": "snappy"
+                          },
+                          "schema": [],
+                          "linkedService": {
+                            "name": "API",
+                            "properties": {
+                              "type": "Lakehouse",
+                              "typeProperties": {
+                                "artifactId": "656aa3f1-e993-9212-4b0f-b435e1c6bf42",
+                                "workspaceId": "00000000-0000-0000-0000-000000000000",
+                                "rootFolder": "Files"
+                              },
+                              "annotations": []
+                            }
+                          },
+                          "annotations": []
+                        }
+                      },
+                      "translator": {
+                        "type": "TabularTranslator",
+                        "typeConversion": true,
+                        "typeConversionSettings": {
+                          "allowDataTruncation": true,
+                          "treatBooleanAsNumber": false
+                        }
+                      },
+                      "enableStaging": false
+                    },
+                    "policy": {
+                      "timeout": "0.12:00:00",
+                      "retry": 0,
+                      "retryIntervalInSeconds": 30,
+                      "secureInput": false,
+                      "secureOutput": false
+                    },
+                    "name": "CopyDummyJsonData",
+                    "dependsOn": []
+                  }
+                ]
+              },
+              "name": "If Condition1",
+              "dependsOn": []
+            }
+          ]
+        },
+        "name": "ForEach1",
+        "dependsOn": [
+          {
+            "activity": "Get Metadata1",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "GetMetadata",
+        "typeProperties": {
+          "datasetSettings": {
+            "type": "Parquet",
+            "typeProperties": {
+              "location": {
+                "type": "LakehouseLocation",
+                "folderPath": {
+                  "value": "@concat('Raw/','DummyJson_',formatDateTime(utcNow(),'yyyyMMdd'))",
+                  "type": "Expression"
+                }
+              },
+              "compressionCodec": "snappy"
+            },
+            "schema": [],
+            "linkedService": {
+              "name": "API",
+              "properties": {
+                "type": "Lakehouse",
+                "typeProperties": {
+                  "artifactId": "656aa3f1-e993-9212-4b0f-b435e1c6bf42",
+                  "workspaceId": "00000000-0000-0000-0000-000000000000",
+                  "rootFolder": "Files"
+                },
+                "annotations": []
+              }
+            },
+            "annotations": []
+          },
+          "fieldList": [
+            "itemName",
+            "childItems",
+            "lastModified"
+          ],
+          "storeSettings": {
+            "type": "AzureBlobStorageReadSettings",
+            "enablePartitionDiscovery": false
+          },
+          "formatSettings": {
+            "type": "ParquetReadSettings"
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Get Metadata1",
+        "dependsOn": []
+      }
+    ]
+  }
+}

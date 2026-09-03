@@ -1,0 +1,43 @@
+table discount_kpi
+	lineageTag: 5dcb7212-6453-4934-997d-dfa49fb2ed42
+	sourceLineageTag: [dbo].[discount_kpi]
+
+	column TotalDiscount
+		dataType: double
+		lineageTag: 8d519dd7-ef69-4dd6-8ffc-84ff9b9d53b3
+		sourceLineageTag: TotalDiscount
+		summarizeBy: sum
+		sourceColumn: TotalDiscount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DiscountPercentage
+		dataType: double
+		lineageTag: 6dc09a3c-5b59-4fdf-86cf-48a761f82780
+		sourceLineageTag: DiscountPercentage
+		summarizeBy: sum
+		sourceColumn: DiscountPercentage
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DiscountedLines
+		dataType: int64
+		formatString: 0
+		lineageTag: 7d8bb607-4b7a-45de-bb9f-60112546ade1
+		sourceLineageTag: DiscountedLines
+		summarizeBy: sum
+		sourceColumn: DiscountedLines
+
+		annotation SummarizationSetBy = Automatic
+
+	partition discount_kpi = entity
+		mode: directLake
+		source
+			entityName: discount_kpi
+			schemaName: dbo
+			expressionSource: 'DirectLake - Lakehouse1'
+

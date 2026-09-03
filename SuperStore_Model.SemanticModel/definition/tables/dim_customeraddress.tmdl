@@ -1,0 +1,59 @@
+table dim_customeraddress
+	lineageTag: 8352e04e-3969-46e2-80c6-1664f84b799f
+	sourceLineageTag: [dbo].[dim_customeraddress]
+
+	column CustomerID
+		dataType: int64
+		formatString: 0
+		lineageTag: 0571dc66-76fa-4b1c-bd3c-811d9abdec44
+		sourceLineageTag: CustomerID
+		summarizeBy: count
+		sourceColumn: CustomerID
+
+		annotation SummarizationSetBy = Automatic
+
+	column AddressID
+		dataType: int64
+		formatString: 0
+		lineageTag: e2c25758-479c-4660-99a5-9dd97b36137c
+		sourceLineageTag: AddressID
+		summarizeBy: count
+		sourceColumn: AddressID
+
+		annotation SummarizationSetBy = Automatic
+
+	column AddressType
+		dataType: string
+		lineageTag: 2c536b69-6ec0-4369-8b0a-62319b979e8f
+		sourceLineageTag: AddressType
+		summarizeBy: none
+		sourceColumn: AddressType
+
+		annotation SummarizationSetBy = Automatic
+
+	column rowguid
+		dataType: string
+		lineageTag: df699bab-0f32-47de-acaf-d22fd9edb187
+		sourceLineageTag: rowguid
+		summarizeBy: none
+		sourceColumn: rowguid
+
+		annotation SummarizationSetBy = Automatic
+
+	column ModifiedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 41cb1afc-50e3-45f7-9e3f-fff60eb26f16
+		sourceLineageTag: ModifiedDate
+		summarizeBy: none
+		sourceColumn: ModifiedDate
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_customeraddress = entity
+		mode: directLake
+		source
+			entityName: dim_customeraddress
+			schemaName: dbo
+			expressionSource: 'DirectLake - Lakehouse1'
+

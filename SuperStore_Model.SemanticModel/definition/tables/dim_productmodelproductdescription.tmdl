@@ -1,0 +1,59 @@
+table dim_productmodelproductdescription
+	lineageTag: 0008f0e5-f350-415e-9467-14e51b447bf3
+	sourceLineageTag: [dbo].[dim_productmodelproductdescription]
+
+	column ProductModelID
+		dataType: int64
+		formatString: 0
+		lineageTag: b3f71290-6e0f-4ae7-bd7b-1aa208ac4455
+		sourceLineageTag: ProductModelID
+		summarizeBy: none
+		sourceColumn: ProductModelID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductDescriptionID
+		dataType: int64
+		formatString: 0
+		lineageTag: 30c37133-727b-40cd-a32f-5f207902e291
+		sourceLineageTag: ProductDescriptionID
+		summarizeBy: none
+		sourceColumn: ProductDescriptionID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Culture
+		dataType: string
+		lineageTag: 04876aed-2d22-4449-8e6e-f760eae959d5
+		sourceLineageTag: Culture
+		summarizeBy: none
+		sourceColumn: Culture
+
+		annotation SummarizationSetBy = Automatic
+
+	column rowguid
+		dataType: string
+		lineageTag: 2ea3e797-b5c2-474a-8f41-74038bb84429
+		sourceLineageTag: rowguid
+		summarizeBy: none
+		sourceColumn: rowguid
+
+		annotation SummarizationSetBy = Automatic
+
+	column ModifiedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 0b38dae4-19d0-4b8c-8649-220c9916b8c2
+		sourceLineageTag: ModifiedDate
+		summarizeBy: none
+		sourceColumn: ModifiedDate
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_productmodelproductdescription = entity
+		mode: directLake
+		source
+			entityName: dim_productmodelproductdescription
+			schemaName: dbo
+			expressionSource: 'DirectLake - Lakehouse1'
+

@@ -1,0 +1,28 @@
+relationship 4b0b6ecf-c578-1b3b-d5ce-21e21429028b
+	fromColumn: dim_address.AddressID
+	toColumn: dim_customer_address.AddressID
+
+relationship f3cc9b6e-d9f2-c74f-4fa1-6bc63df8ef53
+	fromColumn: dim_customer.CustomerID
+	toColumn: dim_customer_address.CustomerID
+
+relationship ba21e0ad-d99c-caf8-ede5-1f853b994367
+	fromColumn: fact_sales.CustomerID
+	toColumn: dim_customer.CustomerID
+
+relationship 27cd1bc0-bdde-e12b-a1b5-e9cd3aa98787
+	fromColumn: fact_sales.ProductID
+	toColumn: dim_product.ProductID
+
+relationship 53849c65-5041-3a7c-c20d-e9e829a7261a
+	fromColumn: dim_product.ProductCategoryID
+	toColumn: dim_productcategory.ProductCategoryID
+
+relationship 61f2c498-2d23-752e-934b-89b1b7b832eb
+	fromColumn: dim_productmodelproductdescription.ProductDescriptionID
+	toColumn: dim_productdescription.ProductDescriptionID
+
+relationship b87a161e-c615-fa5a-65f3-82c9f7429e43
+	fromColumn: dim_productmodelproductdescription.ProductModelID
+	toColumn: dim_productmodel.ProductModelID
+

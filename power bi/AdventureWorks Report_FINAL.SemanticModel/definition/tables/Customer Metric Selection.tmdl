@@ -1,0 +1,48 @@
+table 'Customer Metric Selection'
+	lineageTag: 9a9714a8-4956-45a2-a094-ba3fc86cd68f
+
+	column 'Customer Metric Selection'
+		lineageTag: 0ad92bbc-13bf-4053-82a1-6440c7dd77fa
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Customer Metric Selection Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Customer Metric Selection Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Customer Metric Selection Fields'
+		isHidden
+		lineageTag: 4113c8ff-1333-470d-84c6-508f81aeee52
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Customer Metric Selection Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Customer Metric Selection Order'
+		isHidden
+		formatString: 0
+		lineageTag: 9824f320-1ddf-4fce-a878-9832a0e25d88
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Customer Metric Selection-490e7fd1-e25f-4835-b50c-2d26dbcb4464' = calculated
+		mode: import
+		source =
+				{
+				    ("Total Customers", NAMEOF('Measure Table'[Total Customers]), 0),
+				    ("Revenue per Customer", NAMEOF('Measure Table'[Average Revenue per Customer]), 1)
+				}
+
+	annotation PBI_Id = e056a7db089a4389bda6848a8fb905e1
+

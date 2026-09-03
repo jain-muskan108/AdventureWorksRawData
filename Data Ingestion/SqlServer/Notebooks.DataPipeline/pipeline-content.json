@@ -1,0 +1,155 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "ae3377dc-1e5f-a4f8-42b9-04c73c4852f3",
+          "workspaceId": "00000000-0000-0000-0000-000000000000"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "NotebookBronzeToSilver",
+        "dependsOn": []
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "11faff76-acd8-89e4-4016-2c11d5d907ef",
+          "workspaceId": "00000000-0000-0000-0000-000000000000"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "NotebookSilverToGoldFact",
+        "dependsOn": [
+          {
+            "activity": "NotebookBronzeToSilver",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "9ebad3cf-c68c-8a72-4a97-f55646fd2819",
+          "workspaceId": "00000000-0000-0000-0000-000000000000"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "NotebookSilverToGoldDim",
+        "dependsOn": [
+          {
+            "activity": "NotebookSilverToGoldFact",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "MicrosoftTeams",
+        "typeProperties": {
+          "content": "<p><br>\n@{pipeline().Pipeline}<br>\n@{pipeline()?.TriggerEvent?.Source}</p>\n<p>@{activity('NotebookBronzeToSilver').output}</p>",
+          "teamId": "2b90b845-82de-4746-8d8c-0a43b42350ca",
+          "channelId": "19:702359c2fdd5458aba68c8c87b6e1d14@thread.tacv2",
+          "operationType": "SendMessageInChannel",
+          "subject": "PipeLine Failed"
+        },
+        "externalReferences": {
+          "connection": "dd667348-2400-4e67-b6ef-c134600d1492"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "failure_notifications",
+        "dependsOn": [
+          {
+            "activity": "NotebookBronzeToSilver",
+            "dependencyConditions": [
+              "Failed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "MicrosoftTeams",
+        "typeProperties": {
+          "content": "<p><br>\n@{pipeline().Pipeline}<br>\n@{pipeline()?.TriggerEvent?.Source}</p>\n<p>@{activity('NotebookBronzeToSilver').output}</p>",
+          "teamId": "2b90b845-82de-4746-8d8c-0a43b42350ca",
+          "channelId": "19:702359c2fdd5458aba68c8c87b6e1d14@thread.tacv2",
+          "operationType": "SendMessageInChannel",
+          "subject": "PipeLine Failed"
+        },
+        "externalReferences": {
+          "connection": "dd667348-2400-4e67-b6ef-c134600d1492"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "failure_notification",
+        "dependsOn": [
+          {
+            "activity": "NotebookSilverToGoldFact",
+            "dependencyConditions": [
+              "Failed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "MicrosoftTeams",
+        "typeProperties": {
+          "content": "<p><br>\n@{pipeline().Pipeline}<br>\n@{pipeline()?.TriggerEvent?.Source}</p>\n<p>@{activity('NotebookBronzeToSilver').output}</p>",
+          "teamId": "2b90b845-82de-4746-8d8c-0a43b42350ca",
+          "channelId": "19:702359c2fdd5458aba68c8c87b6e1d14@thread.tacv2",
+          "operationType": "SendMessageInChannel",
+          "subject": "PipeLine Failed"
+        },
+        "externalReferences": {
+          "connection": "dd667348-2400-4e67-b6ef-c134600d1492"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "failure-notification",
+        "dependsOn": [
+          {
+            "activity": "NotebookSilverToGoldDim",
+            "dependencyConditions": [
+              "Failed"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

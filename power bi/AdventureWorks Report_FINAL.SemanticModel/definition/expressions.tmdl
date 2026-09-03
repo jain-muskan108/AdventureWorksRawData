@@ -1,0 +1,152 @@
+expression 'Largest Asset Management Firms' =
+		let
+		    Source = Web.BrowserContents("https://en.wikipedia.org/wiki/List_of_asset_management_firms"),
+		    #"Extracted Table From Html" = Html.Table(Source, {{"Column1", "TABLE.sortable.wikitable > * > TR > :nth-child(1)"}, {"Column2", "TABLE.sortable.wikitable > * > TR > :nth-child(2)"}, {"Column3", "TABLE.sortable.wikitable > * > TR > :nth-child(3)"}, {"Column4", "TABLE.sortable.wikitable > * > TR > :nth-child(4)"}}, [RowSelector="TABLE.sortable.wikitable > * > TR"]),
+		    #"Promoted Headers" = Table.PromoteHeaders(#"Extracted Table From Html", [PromoteAllScalars=true]),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Rank", Int64.Type}, {"Firm/company", type text}, {"Country", type text}, {"AUM (billion USD)", Int64.Type}})
+		in
+		    #"Changed Type"
+	lineageTag: 870401bb-dbf2-4bbe-9b91-ea0517b342aa
+	queryGroup: 'Demo Queries'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'Sample File' =
+		let
+		    Source = Folder.Files("C:\Users\ampar\OneDrive\Desktop\Adventure Works Raw Data\Sales Data"),
+		    Navigation1 = Source{0}[Content]
+		in
+		    Navigation1
+	lineageTag: ce9b1d72-601e-46de-87f0-8dcfd033d744
+	queryGroup: 'Transform File from Sales Data\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression Parameter1 = #"Sample File" meta [IsParameterQuery=true, BinaryIdentifier=#"Sample File", Type="Binary", IsParameterQueryRequired=true]
+	lineageTag: 655cf8c1-1a43-4058-9bcd-8bbf6a9ea8ec
+	queryGroup: 'Transform File from Sales Data\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transform Sample File' =
+		let
+		    Source = Csv.Document(Parameter1,[Delimiter=",", Columns=8, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
+		in
+		    #"Promoted Headers"
+	lineageTag: 9bfa04c5-9b7e-45dc-888c-4aa477979c13
+	queryGroup: 'Transform File from Sales Data'
+
+	annotation PBI_ResultType = Table
+
+expression 'Transform File' =
+		let
+		    Source = (Parameter1 as binary) => let
+		    Source = Csv.Document(Parameter1,[Delimiter=",", Columns=8, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
+		in
+		    #"Promoted Headers"
+		in
+		    Source
+	mAttributes: [ FunctionQueryBinding = "{""exemplarFormulaName"":""Transform Sample File""}" ]
+	lineageTag: 4c30ac2d-e627-43a2-8162-7a38fefefe3b
+	queryGroup: 'Transform File from Sales Data\Helper Queries'
+
+	annotation PBI_ResultType = Function
+
+expression 'Server (Fuzzy Factory)' = "127.0.0.1" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: b7c58a8d-afe2-4bf4-8df7-d5b8553947f2
+	queryGroup: 'Demo Queries'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+
+expression 'Database (Fuzzy Factory)' = "mavenfuzzyfactory_production" meta [IsParameterQuery=true, List={"mavenfuzzyfactory_development", "mavenfuzzyfactory_production"}, DefaultValue="mavenfuzzyfactory_development", Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 1e291b3b-210b-455d-9c2f-596bb0f8a9ba
+	queryGroup: 'Demo Queries'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+
+expression 'mavenfuzzyfactory_development order_item_refunds' =
+		let
+		    Source = MySQL.Database(#"Server (Fuzzy Factory)", #"Database (Fuzzy Factory)", [ReturnSingleDatabase=true]),
+		    mavenfuzzyfactory_development_order_item_refunds = Source{[Schema=#"Database (Fuzzy Factory)",Item="order_item_refunds"]}[Data]
+		in
+		    mavenfuzzyfactory_development_order_item_refunds
+	lineageTag: 27ab1080-f7e9-46c1-8eac-06f45b258af2
+	queryGroup: 'Demo Queries'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'mavenfuzzyfactory_development order_items' =
+		let
+		    Source = MySQL.Database(#"Server (Fuzzy Factory)", #"Database (Fuzzy Factory)", [ReturnSingleDatabase=true]),
+		    mavenfuzzyfactory_development_order_items = Source{[Schema=#"Database (Fuzzy Factory)",Item="order_items"]}[Data]
+		in
+		    mavenfuzzyfactory_development_order_items
+	lineageTag: 2624d21a-76a3-4a96-bc69-ed49a219a84f
+	queryGroup: 'Demo Queries'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'mavenfuzzyfactory_development orders' =
+		let
+		    Source = MySQL.Database(#"Server (Fuzzy Factory)", #"Database (Fuzzy Factory)", [ReturnSingleDatabase=true]),
+		    mavenfuzzyfactory_development_orders = Source{[Schema=#"Database (Fuzzy Factory)",Item="orders"]}[Data]
+		in
+		    mavenfuzzyfactory_development_orders
+	lineageTag: 6d37d0ba-19f8-4ee6-a11b-f1bd01462a8c
+	queryGroup: 'Demo Queries'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'mavenfuzzyfactory_development products' =
+		let
+		    Source = MySQL.Database(#"Server (Fuzzy Factory)", #"Database (Fuzzy Factory)", [ReturnSingleDatabase=true]),
+		    mavenfuzzyfactory_development_products = Source{[Schema=#"Database (Fuzzy Factory)",Item="products"]}[Data]
+		in
+		    mavenfuzzyfactory_development_products
+	lineageTag: 4c4a682c-105b-498e-a867-f0d08ab27558
+	queryGroup: 'Demo Queries'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'mavenfuzzyfactory_development website_pageviews' =
+		let
+		    Source = MySQL.Database(#"Server (Fuzzy Factory)", #"Database (Fuzzy Factory)", [ReturnSingleDatabase=true]),
+		    mavenfuzzyfactory_development_website_pageviews = Source{[Schema=#"Database (Fuzzy Factory)",Item="website_pageviews"]}[Data]
+		in
+		    mavenfuzzyfactory_development_website_pageviews
+	lineageTag: 19705cea-02e2-4670-bace-3c4e8719c0a2
+	queryGroup: 'Demo Queries'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression 'mavenfuzzyfactory_development website_sessions' =
+		let
+		    Source = MySQL.Database(#"Server (Fuzzy Factory)", #"Database (Fuzzy Factory)", [ReturnSingleDatabase=true]),
+		    mavenfuzzyfactory_development_website_sessions = Source{[Schema=#"Database (Fuzzy Factory)",Item="website_sessions"]}[Data]
+		in
+		    mavenfuzzyfactory_development_website_sessions
+	lineageTag: aec5e83d-2f1b-4552-b437-dc5f4249214a
+	queryGroup: 'Demo Queries'
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

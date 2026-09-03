@@ -1,0 +1,59 @@
+table dim_productcategory
+	lineageTag: f6f12b86-5bc4-48a3-a93f-180525342766
+	sourceLineageTag: [dbo].[dim_productcategory]
+
+	column ProductCategoryID
+		dataType: int64
+		formatString: 0
+		lineageTag: 41c5b44f-0d08-434b-bdfa-bf84791c5602
+		sourceLineageTag: ProductCategoryID
+		summarizeBy: none
+		sourceColumn: ProductCategoryID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ParentProductCategoryID
+		dataType: int64
+		formatString: 0
+		lineageTag: 98f0986b-72ad-4b21-b9a2-d0662a14f4cc
+		sourceLineageTag: ParentProductCategoryID
+		summarizeBy: none
+		sourceColumn: ParentProductCategoryID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Name
+		dataType: string
+		lineageTag: 8809a30e-b08d-4316-8d91-61857676d51e
+		sourceLineageTag: Name
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column rowguid
+		dataType: string
+		lineageTag: fa6eca91-7217-4abc-ab3b-64c972735b87
+		sourceLineageTag: rowguid
+		summarizeBy: none
+		sourceColumn: rowguid
+
+		annotation SummarizationSetBy = Automatic
+
+	column ModifiedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: e18f6d6e-6f88-42d0-8cda-367836b99cad
+		sourceLineageTag: ModifiedDate
+		summarizeBy: none
+		sourceColumn: ModifiedDate
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_productcategory = entity
+		mode: directLake
+		source
+			entityName: dim_productcategory
+			schemaName: dbo
+			expressionSource: 'DirectLake - Lakehouse1'
+

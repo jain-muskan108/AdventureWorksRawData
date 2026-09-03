@@ -1,0 +1,58 @@
+table dim_productmodel
+	lineageTag: 849c497c-1f19-4fdc-a29b-95ec6ae057f8
+	sourceLineageTag: [dbo].[dim_productmodel]
+
+	column ProductModelID
+		dataType: int64
+		formatString: 0
+		lineageTag: 20b84278-fc93-4979-86cc-7b2fa9578126
+		sourceLineageTag: ProductModelID
+		summarizeBy: none
+		sourceColumn: ProductModelID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Name
+		dataType: string
+		lineageTag: 66756903-ff95-49ca-9f74-6caee08a242f
+		sourceLineageTag: Name
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column CatalogDescription
+		dataType: string
+		lineageTag: d77f485e-9230-4e03-b6cb-d523b9091895
+		sourceLineageTag: CatalogDescription
+		summarizeBy: none
+		sourceColumn: CatalogDescription
+
+		annotation SummarizationSetBy = Automatic
+
+	column rowguid
+		dataType: string
+		lineageTag: aa68de84-ad21-4ea6-a3c5-edc20f2ee185
+		sourceLineageTag: rowguid
+		summarizeBy: none
+		sourceColumn: rowguid
+
+		annotation SummarizationSetBy = Automatic
+
+	column ModifiedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: b95fe0ac-c761-436b-ad6d-b128d6a734a0
+		sourceLineageTag: ModifiedDate
+		summarizeBy: none
+		sourceColumn: ModifiedDate
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_productmodel = entity
+		mode: directLake
+		source
+			entityName: dim_productmodel
+			schemaName: dbo
+			expressionSource: 'DirectLake - Lakehouse1'
+

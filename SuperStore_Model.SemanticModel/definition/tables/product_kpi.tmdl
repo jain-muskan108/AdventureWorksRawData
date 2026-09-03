@@ -1,0 +1,96 @@
+table product_kpi
+	lineageTag: 4c6ade5a-d635-4447-b4c6-8941f0c699a6
+	sourceLineageTag: [dbo].[product_kpi]
+
+	column ProductID
+		dataType: int64
+		formatString: 0
+		lineageTag: 5c81d69f-58d3-4250-93d9-386e3b04245b
+		sourceLineageTag: ProductID
+		summarizeBy: count
+		sourceColumn: ProductID
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitsSold
+		dataType: int64
+		formatString: 0
+		lineageTag: a83915b1-293d-4be4-bc30-5a704a8495a4
+		sourceLineageTag: UnitsSold
+		summarizeBy: sum
+		sourceColumn: UnitsSold
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sales
+		dataType: double
+		lineageTag: ad4f580a-4f30-40e3-a6d6-30c37b2b54f8
+		sourceLineageTag: Sales
+		summarizeBy: sum
+		sourceColumn: Sales
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column GrossSales
+		dataType: double
+		lineageTag: ba6cf342-091f-4429-bb88-9c4dd1db6a7d
+		sourceLineageTag: GrossSales
+		summarizeBy: sum
+		sourceColumn: GrossSales
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Discount
+		dataType: double
+		lineageTag: 059911e4-006a-493b-b540-f0e357428086
+		sourceLineageTag: Discount
+		summarizeBy: sum
+		sourceColumn: Discount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column NetSales
+		dataType: double
+		lineageTag: 153fdd34-6218-46fc-996a-e3d6385975af
+		sourceLineageTag: NetSales
+		summarizeBy: sum
+		sourceColumn: NetSales
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Orders
+		dataType: int64
+		formatString: 0
+		lineageTag: 179a1ff3-d21e-4352-9320-19c377fab965
+		sourceLineageTag: Orders
+		summarizeBy: sum
+		sourceColumn: Orders
+
+		annotation SummarizationSetBy = Automatic
+
+	column AverageOrderValue
+		dataType: double
+		lineageTag: b5e60db4-081c-4d20-b29d-e1d025cc9b68
+		sourceLineageTag: AverageOrderValue
+		summarizeBy: sum
+		sourceColumn: AverageOrderValue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition product_kpi = entity
+		mode: directLake
+		source
+			entityName: product_kpi
+			schemaName: dbo
+			expressionSource: 'DirectLake - Lakehouse1'
+

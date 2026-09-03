@@ -1,0 +1,94 @@
+table dim_address
+	lineageTag: 9829ef0e-d036-41b1-a5a0-5a84fed35ebf
+	sourceLineageTag: [dbo].[dim_address]
+
+	column AddressID
+		dataType: int64
+		formatString: 0
+		lineageTag: 2c5e549c-3a15-48ec-804b-a7f58ca12a44
+		sourceLineageTag: AddressID
+		summarizeBy: none
+		sourceColumn: AddressID
+
+		annotation SummarizationSetBy = Automatic
+
+	column AddressLine1
+		dataType: string
+		lineageTag: 77aa2bdc-669f-4ba0-863c-5d01a9dcbb3b
+		sourceLineageTag: AddressLine1
+		summarizeBy: none
+		sourceColumn: AddressLine1
+
+		annotation SummarizationSetBy = Automatic
+
+	column AddressLine2
+		dataType: string
+		lineageTag: fa17c592-c9b4-4fe6-9e2b-6bfb36747b71
+		sourceLineageTag: AddressLine2
+		summarizeBy: none
+		sourceColumn: AddressLine2
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: 112cb838-76b0-4212-9e5d-1512062e4266
+		sourceLineageTag: City
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column StateProvince
+		dataType: string
+		lineageTag: 32765db2-163d-47b9-9c20-69beac06469c
+		sourceLineageTag: StateProvince
+		summarizeBy: none
+		sourceColumn: StateProvince
+
+		annotation SummarizationSetBy = Automatic
+
+	column CountryRegion
+		dataType: string
+		lineageTag: c7a29109-6386-4686-86d7-98d41467a9af
+		sourceLineageTag: CountryRegion
+		summarizeBy: none
+		sourceColumn: CountryRegion
+
+		annotation SummarizationSetBy = Automatic
+
+	column PostalCode
+		dataType: string
+		lineageTag: 2b435203-b43a-4143-9420-1bff1b208807
+		sourceLineageTag: PostalCode
+		summarizeBy: none
+		sourceColumn: PostalCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column rowguid
+		dataType: string
+		lineageTag: b75f53ac-a8d9-4b99-86da-ce9c08df847a
+		sourceLineageTag: rowguid
+		summarizeBy: none
+		sourceColumn: rowguid
+
+		annotation SummarizationSetBy = Automatic
+
+	column ModifiedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: bdcef594-99eb-47c1-8571-be597d154702
+		sourceLineageTag: ModifiedDate
+		summarizeBy: none
+		sourceColumn: ModifiedDate
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_address = entity
+		mode: directLake
+		source
+			entityName: dim_address
+			schemaName: dbo
+			expressionSource: 'DirectLake - Lakehouse1'
+

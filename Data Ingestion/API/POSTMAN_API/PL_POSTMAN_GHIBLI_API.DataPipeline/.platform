@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "PL_POSTMAN_GHIBLI_API"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "64bf5f65-5630-b13e-484c-666b639ccb18"
+  }
+}

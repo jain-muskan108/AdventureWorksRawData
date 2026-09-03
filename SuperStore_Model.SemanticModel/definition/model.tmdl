@@ -1,0 +1,29 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["DirectLake - Lakehouse1"]
+
+annotation PBI_ProTooling = ["DirectLakeOnOneLakeInWeb","WebModelingEdit"]
+
+ref table dim_productdescription
+ref table dim_customeraddress
+ref table dim_customer_address
+ref table dim_productcategory
+ref table dim_address
+ref table dim_product
+ref table dim_productmodel
+ref table dim_productmodelproductdescription
+ref table dim_customer
+ref table discount_kpi
+ref table shipping_kpi
+ref table sales_kpi
+ref table product_kpi
+ref table fact_sales
+
